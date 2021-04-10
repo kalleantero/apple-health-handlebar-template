@@ -1,0 +1,10 @@
+{{#each (toArray msg.ClinicalDocument.entry) as |drEntry|}}
+    {{#each (toArray this.organizer.component) as |obsEntry|}}
+        {{#if obsEntry.observation}}
+            {{>Resources/Observation.hbs observationCategory="vital-signs" observationEntry=obsEntry.observation ID=(generateUUID (toJsonString obsEntry.observation))}},                   
+                {{#with (evaluate 'Utils/GeneratePatientId.hbs' obj=../../msg.ClinicalDocument.recordTarget.patientRole) as |patientId|}}
+                    {{>References/Observation/subject.hbs ID=(generateUUID (toJsonString obsEntry.observation)) REF=(concat 'Patient/' patientId.Id)}}
+                {{/with}}
+        {{/if}}
+    {{/each}}
+{{/each}}
