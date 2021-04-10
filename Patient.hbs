@@ -1,0 +1,5 @@
+{{#with msg.ClinicalDocument.recordTarget.patientRole}}
+    {{#with (evaluate 'Utils/GeneratePatientId.hbs' obj=this) as |patientId|}}
+        {{>Resources/Patient.hbs patientRole=.. ID=patientId.Id}}
+    {{/with}}
+{{/with}}  
